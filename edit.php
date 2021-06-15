@@ -1,6 +1,7 @@
 <?php
     // (C)
     require_once 'User.php';
+    session_start();
     // var_dump($_GET);
     $id = $_GET['id'];
     // print $id;
@@ -8,5 +9,8 @@
     $user = User::find($id);
     // var_dump($user);
     
+    $errors = $_SESSION['errors'];
+    $_SESSION['errors'] = null;
+    
     // viewの表示
-    include_once 'show_view.php';
+    include_once 'edit_view.php';

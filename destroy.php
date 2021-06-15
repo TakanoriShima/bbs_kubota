@@ -1,11 +1,20 @@
 <?php
     // コントローラ(C)
+    require_once 'User.php';
     session_start();
-    // セッションからユーザー一覧破棄
-    $_SESSION['users'] = null;
+    
+    // var_dump($_POST);
+    // 削除するユーザーのidを取得
+    $id = $_POST['id'];
+    
+    // 削除するユーザーのインスタンスを取得
+    $user = User::find($id);
+    
+    // そのユーザーを削除
+    $user->destroy();
     
     // メッセージをセッションに保存
-    $_SESSION['flash_message'] = '全ユーザーを削除しました';
+    $_SESSION['flash_message'] = $user->name . 'さんを削除しました';
     
     // リダイレクト
     header('Location: index.php');

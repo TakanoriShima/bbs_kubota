@@ -27,6 +27,6 @@
         <?php endif; ?>
         
         <p><a href="create.php">新規ユーザー登録</a></p>
-        <p><a href="destroy.php">全ユーザー削除</a></p>
+        <!--<p><a href="destroy.php">全ユーザー削除</a></p>-->
     </body>
 </html>

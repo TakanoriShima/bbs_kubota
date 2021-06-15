@@ -98,15 +98,33 @@
         public function save(){
             try {
                 $pdo = self::get_connection();
-                $stmt = $pdo -> prepare("INSERT INTO users (name, age) VALUES (:name, :age)");
-                // バインド処理
-                $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
-                $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
-                // 実行
-                $stmt->execute();
+                
+                // 新規登録の時
+                if($this->id === null){
+                    $stmt = $pdo -> prepare("INSERT INTO users (name, age) VALUES (:name, :age)");
+                    // バインド処理
+                    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+                    $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
+                    // 実行
+                    $stmt->execute();
+                    
+                }else{ // 更新の時
+                    $stmt = $pdo -> prepare("UPDATE users SET name=:name, age=:age WHERE id=:id");
+                    // バインド処理
+                    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+                    $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
+                    $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+                    // 実行
+                    $stmt->execute();
+                    
+                }
                 
                 self::close_connection($pdo, $stmp);
-                return "新規ユーザー登録が成功しました。";
+                if($this->id === null){
+                    return "新規ユーザー登録が成功しました。";
+                }else{
+                    return $this->name . 'さんの情報を更新しました';
+                }
                 
             } catch (PDOException $e) {
                 return 'PDO exception: ' . $e->getMessage();
@@ -127,6 +145,21 @@
                 $user = $stmt->fetch();
                 self::close_connection($pdo, $stmp);
                 return $user;
+                
+            } catch (PDOException $e) {
+                return 'PDO exception: ' . $e->getMessage();
+            }
+        }
+        
+        // ユーザーを削除するメソッド
+        public function destroy(){
+            try {
+                $pdo = self::get_connection();
+                $stmt = $pdo -> prepare("DELETE FROM users WHERE id=:id");
+                // バインド処理
+                $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+                // 実行
+                $stmt->execute();
                 
             } catch (PDOException $e) {
                 return 'PDO exception: ' . $e->getMessage();
