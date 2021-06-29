@@ -5,11 +5,6 @@
     // セッション開始
     session_start();
 
-    // モデルを使って、データベースから全ユーザーを取得
-    $users = User::all();
-    
-    // var_dump($users);
-    
     // セッションからメッセージを抜きだす
     $flash_message = $_SESSION['flash_message'];
     // セッションからメッセージを削除

@@ -1,19 +1,21 @@
 <?php
     // モデル(M)
 
-    // ユーザーの設計図を作成
-    class User{
+    // 投稿の設計図を作成
+    class Post{
         // プロパティ
-        public $id; // ユーザー番号
-        public $name; // 名前
-        public $email; // メールアドレス
-        public $password; // パスワード
-        public $created_at; // 登録日時
+        public $id; // 投稿番号
+        public $user_id; // 投稿者のユーザー番号
+        public $title; // タイトル
+        public $content; // 本文
+        public $image; // 画像ファイル名
+        public $created_at; // 投稿日時
         // コンストラクタ
-        public function __construct($name="", $email="", $password=""){
-            $this->name = $name;
-            $this->email = $email;
-            $this->password = $password;
+        public function __construct($user_id="", $title="", $content="", $image=""){
+            $this->user_id = $user_id;
+            $this->title = $title;
+            $this->content = $content;
+            $this->image = $image;
         }
         
         // 入力チェックをするメソッド

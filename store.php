@@ -4,22 +4,21 @@
     // セッション開始（すべてのファイルが使える情報の共有箱）
     session_start();
     // コントローラ(C)
-    // print 'OK';
-    // $_POST, $_GET スーパーグローバル変数
-    // var_dump($_POST);
+    
     $name = $_POST['name'];
-    $age = $_POST['age'];
-    // print $name;
-    // print $age;
-    
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
     // 入力された値から新しいユーザー作成
-    $new_user = new User($name, $age);
+    $new_user = new User($name, $email, $password);
     
-    // 入力チェック(validation)
+    // var_dump($new_user);
+    
+    // // 入力チェック(validation)
     $errors = $new_user->validate();
     // var_dump($errors);
     
-    // 名前も年齢も両方正しく入力されていれば
+    // 名前もメールアドレスもパスワードも正しく入力されていれば
     if(count($errors) === 0){
         
         // 新しく作られたユーザーのインスタンスをDBに保存

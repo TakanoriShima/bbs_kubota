@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>会員制写真投稿サイト</title>
+        <title>My Top</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -12,8 +12,10 @@
         <p class="message"><?= $flash_message ?></p>
         <?php endif; ?>
         
-        <p><a href="create.php">新規ユーザー登録</a></p>
-        <p><a href="login.php">ログイン</a></p>
+        <h2><?= $login_user->name ?>さん、ようこそ！</h2>
+        
+        <p><a href="post_create.php">新規写真投稿</a></p>
+        <p><a href="logout.php">ログアウト</a></p>
         <!--<p><a href="destroy.php">全ユーザー削除</a></p>-->
     </body>
 </html>

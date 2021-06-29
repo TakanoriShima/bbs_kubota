@@ -2,12 +2,12 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>新規ユーザー登録</title>
+        <title>ログイン</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <!--ビュー(V)-->
-        <h1>新規ユーザー登録</h1>
+        <h1>ログイン</h1>
         <?php if($errors !== null): ?>
         <ul>
         <?php foreach($errors as $error): ?>
@@ -15,12 +15,11 @@
         <?php endforeach; ?>
         </ul>
         <?php endif; ?>
-        <form action="store.php" method="POST">
-            名前: <input type="text" name="name"><br>
+        <form action="login_check.php" method="POST">
             メールアドレス: <input type="text" name="email"><br>
             パスワード: <input type="password" name="password"><br>
             <!--<input type="submit" value="登録">-->
-            <button type="submit">登録</button>
+            <button type="submit">ログイン</button>
         </form>
         
         
