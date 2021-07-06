@@ -1,6 +1,6 @@
 <?php
     // filter
-    require_once 'User.php';
+    require_once 'models/User.php';
     // セッション開始
     session_start();
     // ログインしているユーザー情報をセッションから取得

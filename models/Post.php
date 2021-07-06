@@ -22,20 +22,17 @@
         public function validate(){
             // 空のエラー配列作成
             $errors = array();
-            // 名前が入力されていなければ
-            if($this->name === ''){
-                $errors[] = '名前が入力されていません';
+            // タイトルが入力されていなければ
+            if($this->title === ''){
+                $errors[] = 'タイトルが入力されていません';
             }
-            // メールアドレスが入力されていなければ
-            if($this->email === ''){
-                $errors[] = 'メールアドレスを入力してください';
-            }else if(!preg_match('/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/', $this->email)){ // メールアドレスがそれっぽくなければ
-                $errors[] = 'メールアドレスは正しく入力してください';
+            // 本文が入力されていなければ
+            if($this->content === ''){
+                $errors[] = '本文を入力してください';
             }
-            
-            // パスワードが入力されていなければ
-            if($this->password === ''){
-                $errors[] = 'パスワードを入力してください';
+            // 画像が選択されていなければ
+            if($this->image === ''){
+                $errors[] = '画像を選択してください';
             }
             
             // 完成したエラー配列はいあげる
@@ -72,13 +69,14 @@
         public static function all(){
             try {
                 $pdo = self::get_connection();
-                $stmt = $pdo->query('SELECT * FROM users ORDER BY id DESC');
-                // フェッチの結果を、Userクラスのインスタンスにマッピングする
-                $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
-                $users = $stmt->fetchAll();
+                $stmt = $pdo->query('SELECT posts.id, users.name, posts.title, posts.content, posts.image, posts.created_at FROM posts JOIN users ON posts.
+user_id = users.id ORDER BY posts.id DESC');
+                // フェッチの結果を、Postクラスのインスタンスにマッピングする
+                $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Post');
+                $posts = $stmt->fetchAll();
                 self::close_connection($pdo, $stmp);
-                // Userクラスのインスタンスの配列を返す
-                return $users;
+                // Postクラスのインスタンスの配列を返す
+                return $posts;
             } catch (PDOException $e) {
                 return 'PDO exception: ' . $e->getMessage();
             }
@@ -91,11 +89,12 @@
                 
                 // 新規登録の時
                 if($this->id === null){
-                    $stmt = $pdo -> prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
+                    $stmt = $pdo -> prepare("INSERT INTO posts (user_id, title, content, image) VALUES (:user_id, :title, :content, :image)");
                     // バインド処理
-                    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
-                    $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-                    $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
+                    $stmt->bindParam(':user_id', $this->user_id, PDO::PARAM_INT);
+                    $stmt->bindParam(':title', $this->title, PDO::PARAM_STR);
+                    $stmt->bindParam(':content', $this->content, PDO::PARAM_STR);
+                    $stmt->bindParam(':image', $this->image, PDO::PARAM_STR);
                     // 実行
                     $stmt->execute();
                     
@@ -112,7 +111,7 @@
                 
                 self::close_connection($pdo, $stmp);
                 if($this->id === null){
-                    return "新規ユーザー登録が成功しました。";
+                    return "新規写真投稿が成功しました。";
                 }else{
                     return $this->name . 'さんの情報を更新しました';
                 }

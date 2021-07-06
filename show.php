@@ -1,6 +1,6 @@
 <?php
     // (C)
-    require_once 'User.php';
+    require_once 'models/User.php';
     // var_dump($_GET);
     $id = $_GET['id'];
     // print $id;
@@ -9,4 +9,4 @@
     // var_dump($user);
     
     // viewの表示
-    include_once 'show_view.php';
+    include_once 'views/show_view.php';

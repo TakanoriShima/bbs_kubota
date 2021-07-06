@@ -1,6 +1,6 @@
 <?php
     // 外部ファイルの読みこみ
-    require_once 'User.php';
+    require_once 'models/User.php';
     // セッション開始（すべてのファイルが使える情報の共有箱）
     session_start();
     // コントローラ(C)

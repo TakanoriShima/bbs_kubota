@@ -5,4 +5,4 @@
     $_SESSION['errors'] = null;
     
     // viewの表示
-    include_once 'login_view.php';
+    include_once 'views/login_view.php';

@@ -1,6 +1,6 @@
 <?php
     // (C)
-    require_once 'User.php';
+    require_once 'models/User.php';
     session_start();
     // var_dump($_GET);
     $id = $_GET['id'];
@@ -13,4 +13,4 @@
     $_SESSION['errors'] = null;
     
     // viewの表示
-    include_once 'edit_view.php';
+    include_once 'views/edit_view.php';

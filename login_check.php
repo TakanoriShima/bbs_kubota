@@ -1,6 +1,6 @@
 <?php
     // (C)
-    require_once 'User.php';
+    require_once 'models/User.php';
     session_start();
     // var_dump($_POST);
     // 入力された値を取得

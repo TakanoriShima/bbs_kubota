@@ -9,3 +9,10 @@ h1 {
 .error {
     color: red;
 }
+
+table, tr, th, td {
+    border: solid 1px;
+}
+td img {
+    width: 150px;
+}
