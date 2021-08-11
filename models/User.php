@@ -1,8 +1,8 @@
 <?php
     // モデル(M)
-
+    require_once 'models/Model.php';
     // ユーザーの設計図を作成
-    class User{
+    class User extends Model{
         // プロパティ
         public $id; // ユーザー番号
         public $name; // 名前
@@ -40,31 +40,7 @@
             return $errors;
         }
         
-        private static function get_connection(){
-            try {
-                // オプション設定
-                $options = array(
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,        // 失敗したら例外を投げる
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS,   //デフォルトのフェッチモードはクラス
-                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',   //MySQL サーバーへの接続時に実行するコマンド
-                  );
-                $pdo = new PDO('mysql:host=localhost;dbname=bbs_app', 'root', '', $options);
-                return $pdo;
-                
-            } catch (PDOException $e) {
-                return 'PDO exception: ' . $e->getMessage();
-            }
-        }
         
-        // データベースとの切断を行うメソッド
-        private static function close_connection($pdo, $stmp){
-            try {
-                $pdo = null;
-                $stmp = null;
-            } catch (PDOException $e) {
-                return 'PDO exception: ' . $e->getMessage();
-            }
-        }
         
         // 全テーブル情報を取得するメソッド
         public static function all(){
@@ -116,7 +92,7 @@
                 }
                 
             } catch (PDOException $e) {
-                return 'PDO exception: ' . $e->getMessage();
+                return 'そのメールアドレスはすでに登録されています';
             }
         }
         
